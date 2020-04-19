@@ -1,0 +1,37 @@
+❯ ./run_kubernetes.sh
++ dockerpath=adrik976/udacity-prediction
++ kubectl run prediction --generator=run-pod/v1 --image=adrik976/udacity-prediction --port=80 --labels app=prediction
+pod/prediction created
++ kubectl wait pod/prediction --for=condition=Ready --timeout=-1s
+pod/prediction condition met
++ kubectl get pods
+NAME                     READY   STATUS      RESTARTS   AGE
+create-image-jxp79       0/1     Completed   0          75d
+elasticsearch-master-0   1/1     Running     0          75d
+mariadb-0                1/1     Running     0          75d
+prediction               1/1     Running     0          3s
++ kubectl port-forward prediction 8000:80
+Forwarding from 127.0.0.1:8000 -> 80
+Forwarding from [::1]:8000 -> 80
+Handling connection for 8000
+
+❯ kubectl logs prediction
+ * Serving Flask app "app" (lazy loading)
+ * Environment: production
+   WARNING: Do not use the development server in a production environment.
+   Use a production WSGI server instead.
+ * Debug mode: on
+ * Running on http://0.0.0.0:80/ (Press CTRL+C to quit)
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 322-307-025
+[2020-04-19 12:03:58,179] INFO in app: JSON payload:
+{'CHAS': {'0': 0}, 'RM': {'0': 6.575}, 'TAX': {'0': 296.0}, 'PTRATIO': {'0': 15.3}, 'B': {'0': 396.9}, 'LSTAT': {'0': 4.98}}
+[2020-04-19 12:03:58,194] INFO in app: Inference payload DataFrame:
+   CHAS     RM    TAX  PTRATIO      B  LSTAT
+0     0  6.575  296.0     15.3  396.9   4.98
+[2020-04-19 12:03:58,203] INFO in app: Scaling Payload:
+   CHAS     RM    TAX  PTRATIO      B  LSTAT
+0     0  6.575  296.0     15.3  396.9   4.98
+[2020-04-19 12:03:58,206] INFO in app: prediction: [20.35373177134412]
+127.0.0.1 - - [19/Apr/2020 12:03:58] "POST /predict HTTP/1.1" 200 -
