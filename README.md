@@ -37,11 +37,9 @@ It's better to create a virtualenv and activate it:
 
 To do so:
 
-```bash
-make setup
-```
+`make install` 
 
-then run Run `make install` to install the necessary dependencies
+then run `make install` to install the necessary dependencies
 
 ## Running `app.py`
 
