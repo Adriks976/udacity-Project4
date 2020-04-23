@@ -149,7 +149,10 @@ With Locust and Kubernetes (via deployment file)
 
 Here is a video showing my scaling from 1 to 10 pods for my app.
 
-![ScalingVideo](demos/kubescaling.mp4)
+[![ScalingVideo](https://img.youtube.com/vi/CKXkw0zTlk4/0.jpg)](https://youtu.be/CKXkw0zTlk4)
+
+You can also go in demo folder and find the video.
+
 
 And a screenshot showing all the steps from scale up to scale down.
 
