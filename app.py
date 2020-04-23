@@ -35,18 +35,18 @@ def home():
     print(form.errors)
     
     if request.method == 'POST':
-        input = request.form['input']
+        my_input = request.form['input']
 
     if form.validate():
         try:
-            json_prediction = json.loads(input)
+            json_prediction = json.loads(my_input)
             prediction = predict(json_prediction)
             print(prediction.data)
             flash(str(prediction.data.decode("utf-8") ))
         except json.decoder.JSONDecodeError:
-            flash("Error: {} not a valid json".format(input))
+            flash("Error: {} not a valid json".format(my_input))
         except ValueError:
-            flash("Error: {} json not suited for this prediction script".format(input))
+            flash("Error: {} json not suited for this prediction script".format(my_input))
 
         
     else:
