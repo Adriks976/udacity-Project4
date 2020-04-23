@@ -47,11 +47,11 @@ then run Run `make install` to install the necessary dependencies
 
 You can run in different ways this app: standalone, Docker and Kubernetes
 
-1. Standalone:  `python app.py`
+### Standalone:  `python app.py`
 
 You can now access the app on localhost port 80. [http://localhost:80](http://localhost:80)
 
-2. Run in Docker:  `./run_docker.sh` or `make run_docker`
+### Run in Docker:  `./run_docker.sh` or `make run_docker`
 
 This script will:
 - Build an image
@@ -60,7 +60,9 @@ This script will:
 
 You can now access the app on localhost port 8000. [http://localhost:8000](http://localhost:8000)
 
-3. Run in Kubernetes:  `./run_kubernetes.sh`
+### Run in Kubernetes:  `./run_kubernetes.sh` or via deployment file
+
+#### `./run_kubernetes.sh`: 
 
 This script will:
 - Start to run a container in Kubernetes cluster (make sure to have one ready)
@@ -71,6 +73,22 @@ This script will:
 You can now access the app on localhost port 8000. [http://localhost:8000](http://localhost:8000)
 
 You can delete when you've finished the pod with the command `kubectl delete pod prediction`
+
+#### deployment file
+
+In this repository you'll find a yaml file [kubernetes-prediction.yml](kubernetes-prediction.yml)
+
+with the command `kubectl apply -f kubernetes-prediction.yml` you will create 3 kubernetes resources:
+
+- deployment
+- service
+- hpa
+
+then run `kubectl port-forward svc/prediction 8000:80`
+
+You can now access the app on localhost port 8000. [http://localhost:8000](http://localhost:8000)
+
+You can delete when you've finished by running the command `kubectl delete -f kubernetes-prediction.yml`
 
 ## Test the application
 
@@ -103,8 +121,36 @@ By default this script will post a json:
 
 with curl on port 8000 (you can switch to 80 if running on standalone)
 
+Also, when accessing the app, you will notice that a simple front end has been setup to allow user to input their json.
 
+You can also try this way.
 
+![Website front end](demos/frontend.jpg)
 
+## Load Tests
 
+You can run load tests with Locust (installed as a requirement)
 
+```bash
+locust --host=http://localhost:8000
+```
+
+where host is the endpoint of the app.
+
+You can navigate to locust endpoint on locahost port 8089 [http://localhost:8089](http://localhost:8089)
+
+And start load testing!
+
+## Demo Scaling on Kubernetes
+
+Cool part, if you want to try Kubernetes Horizontal Pod Autoscaler you can do so!
+
+With Locust and Kubernetes (via deployment file)
+
+Here is a video showing my scaling from 1 to 10 pods for my app.
+
+![ScalingVideo](demos/kubescaling.mp4)
+
+And a screenshot showing all the steps from scale up to scale down.
+
+![ScalingScreenShot](demos/HPA-all.jpg)
