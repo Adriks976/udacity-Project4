@@ -4,7 +4,7 @@ set -x
 
 # Step 1:
 # Build image and add a descriptive tag
-docker build --no-cache -t prediction .
+docker build -t prediction .
 
 # Step 2: 
 # List docker images

@@ -7,6 +7,7 @@ WORKDIR /app
 COPY app.py /app/app.py
 COPY requirements.txt /app/requirements.txt
 COPY model_data/boston_housing_prediction.joblib /app/model_data/boston_housing_prediction.joblib
+COPY . templates/ /app/templates/
 
 ## Step 3:
 # Install packages from requirements.txt

@@ -1,12 +1,15 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template, flash
 from flask.logging import create_logger
 import logging
-
+from wtforms import Form, TextField, validators
 import pandas as pd
 from sklearn.externals import joblib
 from sklearn.preprocessing import StandardScaler
+import json
 
 app = Flask(__name__)
+app.config.from_object(__name__)
+app.config['SECRET_KEY'] = '7d441f27d441f27567d441f2b6176a'
 LOG = create_logger(app)
 LOG.setLevel(logging.INFO)
 
@@ -18,13 +21,45 @@ def scale(payload):
     scaled_adhoc_predict = scaler.transform(payload.astype(float))
     return scaled_adhoc_predict
 
-@app.route("/")
+# @app.route("/")
+# def home():
+#     html = f"<h3>Sklearn Prediction Home</h3>"
+#     return html.format(format)
+
+class ReusableForm(Form):
+    input = TextField('Input:', validators=[validators.DataRequired()])
+    
+@app.route("/", methods=['GET', 'POST'])
 def home():
-    html = f"<h3>Sklearn Prediction Home</h3>"
-    return html.format(format)
+    form = ReusableForm(request.form)
+    print(form.errors)
+    
+    if request.method == 'POST':
+        input = request.form['input']
+
+    if form.validate():
+        try:
+            json_prediction = json.loads(input)
+            prediction = predict(json_prediction)
+            print(prediction.data)
+            flash(str(prediction.data.decode("utf-8") ))
+        except json.decoder.JSONDecodeError:
+            flash("Error: {} not a valid json".format(input))
+        except ValueError:
+            flash("Error: {} json not suited for this prediction script".format(input))
+
+        
+    else:
+        flash('Error: All the form fields are required. ')
+    
+    return render_template('home.html', form=form)
 
 @app.route("/predict", methods=['POST'])
-def predict():
+def route_predict():
+    return predict(request.json)
+
+
+def predict(input_json):
     """Performs an sklearn prediction
         
         input looks like:
@@ -54,7 +89,7 @@ def predict():
         """
     
     # Logging the input payload
-    json_payload = request.json
+    json_payload = input_json
     LOG.info(f"JSON payload: \n{json_payload}")
     inference_payload = pd.DataFrame(json_payload)
     LOG.info(f"Inference payload DataFrame: \n{inference_payload}")

@@ -1,0 +1,30 @@
+<title>Sklearn Prediction Home</title>
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<div class="container">
+    <h2>Flask Web Form</h2>
+    <form action="" method="post" role="form">
+    {{ form.csrf }}
+    <div class="form-group">
+        <label for="name">Input:</label>
+        <textarea type="text" class="form-control" id="input" name="input" placeholder="Input data" rows="5"></textarea></div>
+        <button type="submit" class="btn btn-success">Submit</button>
+        </form>{% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+
+        {% for message in messages %}
+        {% if "Error" not in message[1]: %}
+        <div class="alert alert-info">
+                        <strong>Success! </strong> {{ message[1] }}</div>
+        {% endif %}
+
+        {% if "Error" in message[1]: %}
+        <div class="alert alert-warning">
+                        {{ message[1] }}</div>
+        {% endif %}
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+
+    </div>
+</div>
