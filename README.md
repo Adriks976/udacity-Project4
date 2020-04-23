@@ -1,4 +1,12 @@
-[![Project 4](https://circleci.com/gh/Adriks976/udacity-Project4.svg?style=svg)](https://app.circleci.com/pipelines/github/Adriks976/udacity-Project4)
+[![Project 4](https://circleci.com/gh/Adriks976/udacity-Project4.svg?style=shield)](https://app.circleci.com/pipelines/github/Adriks976/udacity-Project4)
+
+# Operationalize a Machine Learning Microservice API
+
+## Introduction
+
+This repository is part of my Udacity devops nano degree journey!
+
+You will find in this readme the project overview and tasks (given by Udacity) and all steps to setup deploy and test this project.
 
 ## Project Overview
 
