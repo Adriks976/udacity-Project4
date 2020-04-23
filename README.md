@@ -31,6 +31,43 @@ You can find a detailed [project rubric, here](https://review.udacity.com/#!/rub
 
 ---
 
+## Description of files
+
+Application:
+
+- app.py <- application script
+- model_data <- model and data for prediction
+- templates/home.html <- html file for front end rendered by flask
+- requirements.txt <- dependencies
+
+
+CI/CD:
+
+- .circleci/config.yml
+
+Load Tests:
+
+- locustfile.py
+
+Outputs:
+
+- output_txt_files <- docker output and kubernetes output
+- demos <- Videos and screenshot for demonstration 
+
+Docker:
+
+- Dockerfile <- Building an image for the app to be runned on a container
+
+Tools:
+
+- Makefile <- bunch of command make setup, install, test, lint, run_docker, run_kubernetes, upload_docker, all
+- run_docker.sh <- script to build and start container 
+- run_kubernetes.sh <- script to run on Kubernetes
+- upload_docker.sh <- script to upload to dockerhub container
+- make_prediction.sh < script to test application
+- kubernetes-prediction.yml <- yml to create deployment on kubernetes
+
+
 ## Setup the Environment
 
 It's better to create a virtualenv and activate it:
@@ -87,6 +124,8 @@ then run `kubectl port-forward svc/prediction 8000:80`
 You can now access the app on localhost port 8000. [http://localhost:8000](http://localhost:8000)
 
 You can delete when you've finished by running the command `kubectl delete -f kubernetes-prediction.yml`
+
+
 
 ## Test the application
 
