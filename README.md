@@ -33,18 +33,78 @@ You can find a detailed [project rubric, here](https://review.udacity.com/#!/rub
 
 ## Setup the Environment
 
-* Create a virtualenv and activate it
-* Run `make install` to install the necessary dependencies
+It's better to create a virtualenv and activate it:
 
-### Running `app.py`
+To do so:
+
+```bash
+make setup
+```
+
+then run Run `make install` to install the necessary dependencies
+
+## Running `app.py`
+
+You can run in different ways this app: standalone, Docker and Kubernetes
 
 1. Standalone:  `python app.py`
-2. Run in Docker:  `./run_docker.sh`
+
+You can now access the app on localhost port 80. [http://localhost:80](http://localhost:80)
+
+2. Run in Docker:  `./run_docker.sh` or `make run_docker`
+
+This script will:
+- Build an image
+- List images to verify that this app is dockerized
+- Run a container with this specified image and map port 8000 (host) to 80 (container)
+
+You can now access the app on localhost port 8000. [http://localhost:8000](http://localhost:8000)
+
 3. Run in Kubernetes:  `./run_kubernetes.sh`
 
-### Kubernetes Steps
+This script will:
+- Start to run a container in Kubernetes cluster (make sure to have one ready)
+- Wait for the pod to be running
+- List pod to verify your pod is up
+- Forward port 8000 (host) to 80 (container)
 
-* Setup and Configure Docker locally
-* Setup and Configure Kubernetes locally
-* Create Flask app in Container
-* Run via kubectl
+You can now access the app on localhost port 8000. [http://localhost:8000](http://localhost:8000)
+
+You can delete when you've finished the pod with the command `kubectl delete pod prediction`
+
+## Test the application
+
+You can test this application by running the script `./make_prediction.sh`
+
+By default this script will post a json:
+
+```json
+{  
+   "CHAS":{  
+      "0":0
+   },
+   "RM":{  
+      "0":6.575
+   },
+   "TAX":{  
+      "0":296.0
+   },
+   "PTRATIO":{  
+      "0":15.3
+   },
+   "B":{  
+      "0":396.9
+   },
+   "LSTAT":{  
+      "0":4.98
+   }
+}
+```
+
+with curl on port 8000 (you can switch to 80 if running on standalone)
+
+
+
+
+
+
